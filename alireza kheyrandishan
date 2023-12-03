@@ -1,0 +1,10 @@
+def sort_names(names):
+    sorted_list = []
+    for name in names:
+        last_name, first_name = name.split(" ")
+        sorted_list.append(f"{last_name}, {first_name}")
+    sorted_list.sort()
+    return sorted_list
+names = ["Mohsen Jamshidi", "Alireza Asli", "Pezhman Jamshidi" ]
+sorted_names = sort_names(names)
+print(sorted_names)
