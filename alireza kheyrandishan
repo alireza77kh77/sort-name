@@ -1,10 +1,41 @@
-def sort_names(names):
-    sorted_list = []
+import time
+import random
+import string
+import matplotlib.pyplot as plt
+
+def generate_random_names(size):
+    names = []
+    for _ in range(size):
+        first_name = ''.join(random.choices(string.ascii_uppercase, k=3))
+        last_name = ''.join(random.choices(string.ascii_uppercase, k=3))
+        names.append({'First Name': first_name, 'Last Name': last_name})
+    return names
+
+def count_unique_names(names):
+    first_names = set()
+    last_names = set()
+
     for name in names:
-        last_name, first_name = name.split(" ")
-        sorted_list.append(f"{last_name}, {first_name}")
-    sorted_list.sort()
-    return sorted_list
-names = ["Mohsen Jamshidi", "Alireza Asli", "Pezhman Jamshidi" ]
-sorted_names = sort_names(names)
-print(sorted_names)
+        first_names.add(name['First Name'])
+        last_names.add(name['Last Name'])
+
+    return len(first_names), len(last_names)
+
+sizes = [10, 100, 250, 500, 750, 1000]
+
+execution_times = []
+for size in sizes:
+    random_names = generate_random_names(size)
+
+    start_time = time.time()
+    unique_first_names, unique_last_names = count_unique_names(random_names)
+    end_time = time.time()
+
+    print(f"Data Size: {size}, Unique First Names: {unique_first_names}, Unique Last Names: {unique_last_names}, Execution Time: {end_time - start_time} seconds")
+    execution_times.append(end_time - start_time)
+
+plt.plot(sizes, execution_times)
+plt.xlabel('Data Size')
+plt.ylabel('Execution Time')
+plt.title('Execution Time for Different Data Sizes')
+plt.show()    
